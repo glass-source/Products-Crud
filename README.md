@@ -43,8 +43,15 @@ openssl req -x509 -newkey rsa:4096 -keyout cert/key.pem -out cert/cert.pem -days
 ```
 
 5. Iniciar servidor:
+
+Para desarrollo:
 ```bash
 npm run dev
+```
+
+Buildear y empezar el servidor:
+```bash
+npm run start
 ```
 
 ## 📚 Documentación de la API
