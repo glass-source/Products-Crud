@@ -39,7 +39,7 @@ npm install
   ```env
   MONGO_URI=mongodb://localhost:27017/secure-api
   JWT_SECRET=supersecretkey
-  BASE_URL=http://127.0.0.1:8000
+  BASE_URL=http://localhost:8080 
   ```
 
 4. Generar certificados SSL:
