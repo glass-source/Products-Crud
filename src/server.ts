@@ -12,12 +12,13 @@ import { db } from "./database/Database";
 
 dotenv.config();
 
+const origin = process.env.BASE_URL;
 const app = express();
 
 // Seguridad
 app.use(helmet());
 app.use(cors({
-    origin: 'http://127.0.0.1:8000',
+    origin: origin,
     credentials: true
   }));
 app.use(express.json());

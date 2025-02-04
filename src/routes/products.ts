@@ -34,7 +34,7 @@ const validateProduct = [
 const handleValidationErrors = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        res.status(400).json({ errors: errors.array() });
     }
     next();
 };
@@ -45,18 +45,15 @@ router.get("/", [
     query('limit').optional().isInt({ min: 1 })
 ], ProductController.getAllProducts);
 
-router.post("/", authMiddleware, validateProduct, (req: RequestWithParamsAndBody, res: express.Response, next: express.NextFunction) => {
-    handleValidationErrors(req, res, next);
+router.post("/", authMiddleware, handleValidationErrors, validateProduct, (req: RequestWithParamsAndBody, res: express.Response) => {
     ProductController.createProduct(req, res);
 });
 
-router.put("/:id", authMiddleware, validateProduct, (req: RequestWithParamsAndBody, res: express.Response, next: express.NextFunction) => {
-    handleValidationErrors(req, res, next);
+router.put("/:id", authMiddleware, handleValidationErrors, validateProduct, (req: RequestWithParamsAndBody, res: express.Response) => {
     ProductController.updateProduct(req, res);
 });
 
-router.delete("/:id", authMiddleware, validateProduct, (req: RequestWithParamsAndBody, res: express.Response, next: express.NextFunction) => {
-    handleValidationErrors(req, res, next);
+router.delete("/:id", authMiddleware, handleValidationErrors, validateProduct, (req: RequestWithParamsAndBody, res: express.Response) => {
     ProductController.deleteProduct(req, res);
 });
 
