@@ -1,4 +1,4 @@
-# 🛍️ Typescript API REST
+# 🛍️ Simple Products CRUD
 
 [![NodeJS](https://img.shields.io/badge/Node.js-6DA55F?logo=node.js&logoColor=white)](#)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)](#)
