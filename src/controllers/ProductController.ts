@@ -37,6 +37,7 @@ export class ProductController {
         }
     }
 
+    @Logger
     static async deleteProduct(req: Request, res: Response) {
         try {
             if (req.statusCode === 400) return res.status(400);
