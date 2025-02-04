@@ -25,13 +25,18 @@ API segura para gestión de productos y autenticación de usuarios, construida p
 
 1. Clonar repositorio:
 ```bash
-git clone https://github.com/glass-source/lab3.git
-cd lab3
-cd backend
+git clone https://github.com/glass-source/Products-Crud.git
+cd Products-Crud
 ```
 
 2. Instalar dependencias:
 ```bash
+cd backend
+npm install
+```
+
+```bash
+cd frontend
 npm install
 ```
 
@@ -46,7 +51,7 @@ npm install
 4. Generar certificados SSL:
 ```bash
 cd backend
-openssl req -x509 -newkey rsa:4096 -keyout cert/key.pem -out cert/cert.pem -days 365 -nodes
+openssl req -x509 -newkey rsa:4096 -keyout server.key -out server.crt -days 365 -nodes
 ```
 
 5. Iniciar servidor:
@@ -63,7 +68,7 @@ openssl req -x509 -newkey rsa:4096 -keyout cert/key.pem -out cert/cert.pem -days
   5.2 Frontend:
   ```bash
   cd frontend
-  ./start.sh
+  npm run dev
   ```
 
 ## 📚 Documentación de la API
@@ -100,18 +105,5 @@ curl -X POST https://localhost:443/products \
   -d '{"nombre": "Teclado Mecánico", "descripcion": "Teclado gaming RGB", "precio": 89.99}'
 ```
 
-## 🛠️ Estructura del Proyecto
-```bash
-backend/
-├── src/
-│ ├── controllers/ # Lógica de los endpoints de la API
-│ ├── database/ # Configuración y conexión a la base de datos
-│ ├── decorators/ # Decoradores para logging y otras funcionalidades
-│ ├── factories/ # Patrones de diseño Factory para creación de objetos
-│ ├── middleware/ # Middlewares para autenticación, validación y manejo de errores
-│ ├── models/ # Esquemas y modelos de MongoDB
-│ └── routes/ # Configuración de las rutas de la API
-├── .env.example # Plantilla de variables de entorno
-├── package.json # Dependencias y scripts del proyecto
-└── tsconfig.json # Configuración de TypeScript
-```
+## 🛠️ License
+This project is licensed under the MIT License.
