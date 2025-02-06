@@ -41,12 +41,13 @@ npm install
 ```
 
 3. Configurar variables de entorno:
+
   3.1 Backend:
-  ```env
-  MONGO_URI=mongodb://localhost:27017/secure-api
-  JWT_SECRET=supersecretkey
-  BASE_URL=http://localhost:8080 
-  ```
+```env
+    MONGO_URI=mongodb://localhost:27017/secure-api
+    JWT_SECRET=supersecretkey
+    BASE_URL=http://localhost:8080 
+```
 
 4. Generar certificados SSL:
 ```bash
@@ -55,21 +56,18 @@ openssl req -x509 -newkey rsa:4096 -keyout server.key -out server.crt -days 365 
 ```
 
 5. Iniciar servidor:
-  5.1 Backend:
-  ```bash
-  cd backend
-  npm run dev
-  ```
-  Para buildear y comenzar:
-  ```bash
-  npm run start
-  ```
 
-  5.2 Frontend:
-  ```bash
-  cd frontend
-  npm run dev
-  ```
+  5.1 Backend:
+```bash
+    cd backend
+    npm run dev
+```
+
+    5.2 Frontend:
+```bash
+    cd frontend
+    npm run dev
+```
 
 ## 📚 Documentación de la API
 
