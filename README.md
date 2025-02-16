@@ -63,7 +63,7 @@ openssl req -x509 -newkey rsa:4096 -keyout server.key -out server.crt -days 365 
     npm run dev
 ```
 
-    5.2 Frontend:
+  5.2 Frontend:
 ```bash
     cd frontend
     npm run dev

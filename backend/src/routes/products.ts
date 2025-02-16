@@ -49,6 +49,8 @@ router.post("/", authMiddleware, handleValidationErrors, validateProduct, (req: 
     ProductController.createProduct(req, res);
 });
 
+router.get("/:id", ProductController.getProductById);
+
 router.put("/:id", authMiddleware, handleValidationErrors, validateProduct, (req: RequestWithParamsAndBody, res: express.Response) => {
     ProductController.updateProduct(req, res);
 });

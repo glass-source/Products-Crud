@@ -1,51 +1,75 @@
-import PropTypes from 'prop-types';
-import { createContext, useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
+import { createContext, useState } from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-    const [authToken, setAuthToken] = useState(null);
-  const navigate = useNavigate();
+export function AuthProvider({ children }) {
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
 
-  useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    if (token && isValidToken(token)) {
-      setAuthToken(token);
-    }
-  }, []);
-
-  const isValidToken = (token) => {
+  const login = async (name, password) => {
     try {
-        const decoded = jwtDecode(token);
-        return decoded.exp > Date.now() / 1000;
-    } catch {
-      return false;
+      // Login to get JWT
+      const loginResponse = await axios.post(
+        "https://localhost:443/auth/login",
+        { username: name, password: password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      );
+
+      const { token } = loginResponse.data;
+
+      // Verify token with /users/me
+      const meResponse = await axios.get("https://localhost:443/users/me", {
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "auth-token": token,
+        },
+      });
+
+      // Store token only after verification
+      localStorage.setItem("token", token);
+      setToken(token);
+
+      return meResponse.data;
+    } catch (error) {
+      localStorage.removeItem("token");
+      setToken(null);
+      throw new Error(error.response?.data?.message || "Login failed");
     }
   };
 
-  const login = (token) => {
-    localStorage.setItem('authToken', token);
-    setAuthToken(token);
-    navigate('/dashboard');
+  const register = async (name, password) => {
+    try {
+      await axios.post('https://localhost:443/auth/register', {
+        username: name,
+        password: password
+      });
+    } catch (error) {
+      throw new Error(error.response?.data?.message || 'Registration failed');
+    }
   };
 
   const logout = () => {
-    localStorage.removeItem('authToken');
-    setAuthToken(null);
-    navigate('/');
+    localStorage.removeItem('token');
+    setToken(null);
+
   };
 
   return (
-    <AuthContext.Provider value={{ authToken, login, logout, isValidToken }}>
+    <AuthContext.Provider value={{ token, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
 AuthProvider.propTypes = {
-    children: PropTypes.node.isRequired,
-  };
+  children: PropTypes.node.isRequired,
+};
 
-export const useAuth = () => useContext(AuthContext);
+export default AuthContext;

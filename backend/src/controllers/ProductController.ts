@@ -15,6 +15,18 @@ export class ProductController {
     }
 
     @Logger
+    static async getProductById(req: Request, res: Response) {
+        try {
+            const producto = await Product.findById(req.params.id);
+            if (!producto) res.status(404).json({ message: "Producto no encontrado" });
+            res.json(producto);
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({ error: (error as any).message });
+        }
+    }
+
+    @Logger
     static async createProduct(req: Request, res: Response) {
         try {
             if (req.statusCode === 400) return res.status(400);

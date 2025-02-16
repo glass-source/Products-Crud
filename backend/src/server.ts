@@ -33,8 +33,8 @@ app.use("/products", productRouter);
 
 // Configurar HTTPS
 const options = {
-    key: fs.readFileSync("server.key"),
-    cert: fs.readFileSync("server.crt"),
+    key: fs.readFileSync("../localhost+2-key.pem"),
+    cert: fs.readFileSync("../localhost+2.pem"),
 };
 
 db;

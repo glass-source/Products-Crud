@@ -1,30 +1,44 @@
-import { Link, useLocation } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { AppBar, Toolbar, Button, TextField, Container } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthUtils";
+import PropTypes from "prop-types"; // Add prop-types for prop validation
 
-const Navbar = () => {
-  const { authToken, logout } = useAuth();
-  const location = useLocation();
+export function Navbar({ onSearch }) {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
 
   return (
-    <nav className="navbar">
-      <Link to="/" className="nav-link">
-        Home
-      </Link>
-      <div className="auth-section">
-        {authToken ? (
-          <button onClick={logout} className="nav-button">
+    <AppBar position="static" color="inherit">
+      <Container>
+        <Toolbar>
+          <TextField
+            size="small"
+            placeholder="Search products..."
+            onChange={(e) => onSearch(e.target.value)}
+            sx={{ flexGrow: 1, mr: 2 }}
+          />
+          <Button component={Link} to="/dashboard">
+            Dashboard
+          </Button>
+          <Button component={Link} to="/create-product">
+            New Product
+          </Button>
+          <Button
+            color="error"
+            onClick={() => {
+              logout();
+              navigate("/login");
+            }}
+          >
             Logout
-          </button>
-        ) : (
-          location.pathname !== '/login' && (
-            <Link to="/login" className="nav-link">
-              Login
-            </Link>
-          )
-        )}
-      </div>
-    </nav>
+          </Button>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
-};
+}
 
-export default Navbar;
+Navbar.propTypes = {
+  onSearch: PropTypes.node.isRequired,
+};
